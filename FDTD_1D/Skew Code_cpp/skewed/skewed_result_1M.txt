@@ -1,0 +1,23 @@
+==19403== Cachegrind, a cache and branch-prediction profiler
+==19403== Copyright (C) 2002-2015, and GNU GPL'd, by Nicholas Nethercote et al.
+==19403== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==19403== Command: ./FDTD_skewed
+==19403== 
+--19403-- warning: L3 cache found, using its data for the LL simulation.
+==19403== 
+==19403== I   refs:      21,021,716,564
+==19403== I1  misses:             1,780
+==19403== LLi misses:             1,718
+==19403== I1  miss rate:           0.00%
+==19403== LLi miss rate:           0.00%
+==19403== 
+==19403== D   refs:      12,014,902,865  (7,811,907,312 rd   + 4,202,995,553 wr)
+==19403== D1  misses:           269,826  (      142,568 rd   +       127,258 wr)
+==19403== LLd misses:           221,262  (       94,836 rd   +       126,426 wr)
+==19403== D1  miss rate:            0.0% (          0.0%     +           0.0%  )
+==19403== LLd miss rate:            0.0% (          0.0%     +           0.0%  )
+==19403== 
+==19403== LL refs:              271,606  (      144,348 rd   +       127,258 wr)
+==19403== LL misses:            222,980  (       96,554 rd   +       126,426 wr)
+==19403== LL miss rate:             0.0% (          0.0%     +           0.0%  )
+

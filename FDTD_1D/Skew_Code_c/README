@@ -1,0 +1,9 @@
+FDTD1D.c - NAIVE 2D FDTD
+
+FDTD_blocked.c -  naive loop tiling.Tiling is done with choosing a tile size which amount of reusable data will fit inside
+
+FDTD_skewed.c - 1-dimension(x) TIME-SKEWING WITH TIME BLOCKING
+
+FDTD_blocked_correctness.c
+
+FDTD_skewed_correctness.c

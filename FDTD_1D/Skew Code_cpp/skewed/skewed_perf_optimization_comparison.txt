@@ -1,0 +1,72 @@
+no optimization
+
+duration1 = 21360738
+count= 0
+
+ Performance counter stats for './FDTD_skewed':
+
+      21431.671987      task-clock (msec)         #    1.000 CPUs utilized          
+                78      context-switches          #    0.004 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,242      page-faults               #    0.058 K/sec                  
+    65,806,587,813      cycles                    #    3.071 GHz                      (49.98%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   210,062,466,933      instructions              #    3.19  insns per cycle          (62.49%)
+    24,106,077,054      branches                  # 1124.788 M/sec                    (62.48%)
+           365,007      branch-misses             #    0.00% of all branches          (62.50%)
+    78,183,663,645      L1-dcache-loads           # 3648.043 M/sec                    (62.53%)
+       254,707,636      L1-dcache-load-misses     #    0.33% of all L1-dcache hits    (62.54%)
+         1,554,716      LLC-loads                 #    0.073 M/sec                    (50.02%)
+           919,611      LLC-load-misses           #   59.15% of all LL-cache hits     (50.00%)
+
+      21.432885870 seconds time elapsed
+
+-O2 flag
+
+duration1 = 8197598
+count= 0
+
+ Performance counter stats for './FDTD_skewed':
+
+       8232.058055      task-clock (msec)         #    1.000 CPUs utilized          
+                11      context-switches          #    0.001 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,240      page-faults               #    0.151 K/sec                  
+    26,506,825,441      cycles                    #    3.220 GHz                      (50.02%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+    16,088,753,803      instructions              #    0.61  insns per cycle          (62.53%)
+     2,025,274,494      branches                  #  246.023 M/sec                    (62.54%)
+           246,494      branch-misses             #    0.01% of all branches          (62.54%)
+     6,006,505,794      L1-dcache-loads           #  729.648 M/sec                    (62.54%)
+       254,235,221      L1-dcache-load-misses     #    4.23% of all L1-dcache hits    (62.50%)
+           117,671      LLC-loads                 #    0.014 M/sec                    (49.96%)
+            29,080      LLC-load-misses           #   24.71% of all LL-cache hits     (50.01%)
+
+       8.232553936 seconds time elapsed
+
+-O3 flag
+
+duration1 = 2188395
+count= 0
+
+ Performance counter stats for './FDTD_skewed':
+
+       2214.122348      task-clock (msec)         #    0.999 CPUs utilized          
+                 9      context-switches          #    0.004 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,244      page-faults               #    0.562 K/sec                  
+     7,084,285,921      cycles                    #    3.200 GHz                      (50.05%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+     5,048,764,665      instructions              #    0.71  insns per cycle          (62.61%)
+       504,446,731      branches                  #  227.831 M/sec                    (62.62%)
+           241,863      branch-misses             #    0.05% of all branches          (62.62%)
+     1,499,429,128      L1-dcache-loads           #  677.212 M/sec                    (62.60%)
+       259,027,725      L1-dcache-load-misses     #   17.28% of all L1-dcache hits    (62.53%)
+            85,434      LLC-loads                 #    0.039 M/sec                    (49.87%)
+            17,141      LLC-load-misses           #   20.06% of all LL-cache hits     (50.05%)
+
+       2.215626169 seconds time elapsed
+

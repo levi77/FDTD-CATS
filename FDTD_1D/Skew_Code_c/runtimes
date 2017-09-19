@@ -1,0 +1,176 @@
+1D runtimes
+s=40
+B=4000
+-o2 optimization
+
+time_skewed1d_correctness.c
+
+Problem space NZ = 100000
+Naive Time = 0.132042
+Skewed Time = 0.148837
+
+
+Problem space NZ = 1000000
+Naive Time = 1.163763
+Skewed Time = 1.489354
+
+
+Problem space NZ = 10000000
+Naive Time = 11.870992
+Skewed Time = 15.356045
+
+
+
+blocked1d_correctness
+
+
+Problem space NZ = 100000
+Naive Time = 0.133388
+Blocked Time = 0.130862
+
+
+Problem space NZ = 1000000
+Naive Time = 1.233591
+Blocked Time = 1.347122
+
+Problem space NZ = 10000000
+Naive Time = 11.566628
+Blocked Time = 13.113986
+
+
+
+C+++++
+
+naive
+
+
+Problem space NZ = 100000 size of arrays= 1600112
+Naive time = 0.118012
+
+Problem space NZ = 1000000 size of arrays= 16000112
+Naive time = 1.026958
+
+
+Problem space NZ = 10000000 size of arrays= 160000112
+Naive time = 10.095137
+
+
+
+
+
+
+
+
+
+
+2D runtimes
+
+
+skew_comparison
+const int s = 20; 
+
+Problem space NZ = 2000 x 2000
+Naive time = 11.260804
+Skewed time = 11.606099
+
+Problem space NZ = 1500 x 1500
+Naive time = 6.161276
+Skewed time = 6.154947
+
+Problem space NZ = 1000 x 1000
+Naive time = 2.773800
+Skewed time = 2.851430
+
+Problem space NZ = 800 x 800
+Naive time = 1.768755
+Skewed time = 1.825473
+
+Total time T = 100
+Problem space NZ = 600 x 600
+Naive time = 1.001788
+Skewed time = 0.986665
+
+
+
+
+skew_blocked
+	const int time_block=10;
+	const int s = 100; 
+    
+Problem space NZ = 2000 x 2000
+Naive time = 10.996656
+Skewed time = 10.994239
+
+Problem space NZ = 1500 x 1500
+Naive time = 6.168848
+Skewed time = 6.195251
+
+Problem space NZ = 1000 x 1000
+Naive time = 2.835372
+Skewed time = 2.846647
+
+Problem space NZ = 800 x 800
+Naive time = 1.770232
+Skewed time = 1.756044
+
+
+
+Problem space NZ = 600 x 600
+Naive time = 1.010227
+Skewed time = 0.992421
+
+
+wonnacott
+	const int s = 20; 
+
+Problem space NZ = 2000 x 2000
+Naive time = 10.934380
+Skewed time = 11.026267
+
+Problem space NZ = 1500 x 1500
+Naive time = 6.167428
+Skewed time = 6.194654
+
+Problem space NZ = 1000 x 1000
+Naive time = 2.755736
+Skewed time = 2.761917
+
+Problem space NZ = 800 x 800
+Naive time = 1.765165
+Skewed time = 1.762009
+
+Problem space NZ = 600 x 600
+Naive time = 1.034653
+Skewed time = 1.064925
+
+
+
+
+
+
+wonnacott_blocked
+
+
+Problem space NZ = 2000 x 2000
+Naive time = 11.009143
+Skewed time = 11.102906
+
+
+Problem space NZ = 1500 x 1500
+Naive time = 6.166258
+Skewed time = 6.258186
+
+Problem space NZ = 1000 x 1000
+Naive time = 2.833506
+Skewed time = 2.841185
+
+Problem space NZ = 800 x 800
+Naive time = 1.771594
+Skewed time = 1.771435
+
+Problem space NZ = 600 x 600
+Naive time = 1.004889
+Skewed time = 1.014099
+
+
+

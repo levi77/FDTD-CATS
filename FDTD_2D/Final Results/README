@@ -1,0 +1,46 @@
+2D CODES
+
+naive.cpp - NAIVE 2D FDTD
+
+skew.cpp - 1-dimension(x) TIME-SKEWING WITHOUT TIME BLOCKING
+
+skew_time_block.cpp - 1-dimension(x) TIME-SKEWING WITH TIME BLOCKING
+
+j-skew/naive_j.cpp - NAIVE 2D FDTD (J OUTER LOOP)
+
+j-skew/jskew.cpp - 1-dimension(y) TIME-SKEWING WITHOUT TIME BLOCKING (J OUTER LOOP)
+
+Wonnacott/wonnacott.cpp - 2-dimension(x,y) TIME-SKEWING WITHOUT TIME BLOCKING
+
+Wonnacott/time_blocked_wonnacott.cpp(x,y) - 2-dimension TIME-SKEWING WITH TIME BLOCKING
+
+Wonnacott/jskew-wonnacott.cpp - 2-dimension(x,y) TIME-SKEWING WITHOUT TIME BLOCKING
+
+Wonnacott/jskew-wonnacott_time_blocked.cpp - 2-dimension(x,y) TIME-SKEWING WITH TIME BLOCKING 
+
+
+
+COMPARISONS with naive.cpp
+
+skew_comparison.cpp
+
+skew_block_comparison.cpp
+
+jskew_comparison.cpp (comparison of jskew vs. naive_j)
+
+jskew_time_blocked_comparison.cpp (comparison of jskew_time_blocked vs. naive_j)
+
+comparison_wonnacott.cpp
+
+comparison_time_blocked_wonnacott.cpp
+
+jskew_comparison_wonnacott.cpp
+
+jskew_comparison_time_blocked_wonnacott.cpp
+
+
+best results is achieved with wonnacott codes.
+
+
+
+2000^2 domains * 100 time

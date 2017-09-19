@@ -1,0 +1,29 @@
+no optimization
+
+size of arrays= 80000056
+
+ duration1 = 15038639
+
+ duration2 = 21726718
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+
+
+-O2 optimization
+
+
+size of arrays= 80000056
+
+ duration1 = 8097906
+
+ duration2 = 8025766
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+
+
+-O3 optimization
+
+size of arrays= 80000056
+
+ duration1 = 2219979
+
+ duration2 = 2132671
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results

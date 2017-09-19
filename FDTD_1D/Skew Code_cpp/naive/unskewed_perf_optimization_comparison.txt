@@ -1,0 +1,80 @@
+!context-switches are increase
+!instructions,branches,L1-dcache-load are decreasing
+
+without optimization
+
+size of arrays= 80000056
+duration1 = 14727047
+count= 0
+
+ Performance counter stats for './FDTD_unskewed':
+
+      14796.621524      task-clock (msec)         #    1.000 CPUs utilized          
+                19      context-switches          #    0.001 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,243      page-faults               #    0.084 K/sec                  
+    47,982,133,329      cycles                    #    3.243 GHz                      (50.01%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+   137,233,869,389      instructions              #    2.86  insns per cycle          (62.51%)
+    16,064,250,232      branches                  # 1085.670 M/sec                    (62.52%)
+            93,608      branch-misses             #    0.00% of all branches          (62.53%)
+    52,081,734,194      L1-dcache-loads           # 3519.840 M/sec                    (62.53%)
+       256,137,296      L1-dcache-load-misses     #    0.49% of all L1-dcache hits    (62.52%)
+         6,868,042      LLC-loads                 #    0.464 M/sec                    (49.97%)
+         1,263,308      LLC-load-misses           #   18.39% of all LL-cache hits     (49.96%)
+
+      14.797090867 seconds time elapsed
+
+
+with -02 optimization
+
+size of arrays= 80000056
+duration1 = 8377072
+count= 0
+
+ Performance counter stats for './FDTD_unskewed':
+
+       8414.307160      task-clock (msec)         #    1.000 CPUs utilized          
+                58      context-switches          #    0.007 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,241      page-faults               #    0.147 K/sec                  
+    27,305,796,542      cycles                    #    3.245 GHz                      (50.00%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+    18,105,099,553      instructions              #    0.66  insns per cycle          (62.50%)
+     2,025,056,137      branches                  #  240.668 M/sec                    (62.50%)
+            47,126      branch-misses             #    0.00% of all branches          (62.50%)
+     6,003,563,407      L1-dcache-loads           #  713.495 M/sec                    (62.50%)
+       256,013,433      L1-dcache-load-misses     #    4.26% of all L1-dcache hits    (62.51%)
+           343,650      LLC-loads                 #    0.041 M/sec                    (50.03%)
+            77,477      LLC-load-misses           #   22.55% of all LL-cache hits     (50.01%)
+
+       8.416364830 seconds time elapsed
+
+with -03 optimization
+
+
+size of arrays= 80000056
+duration1 = 2106994
+count= 0
+
+ Performance counter stats for './FDTD_unskewed':
+
+       2120.018429      task-clock (msec)         #    0.994 CPUs utilized          
+               120      context-switches          #    0.057 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+             1,243      page-faults               #    0.586 K/sec                  
+     6,779,614,019      cycles                    #    3.198 GHz                      (49.74%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+     5,009,810,067      instructions              #    0.74  insns per cycle          (62.31%)
+       502,709,528      branches                  #  237.125 M/sec                    (62.85%)
+            35,741      branch-misses             #    0.01% of all branches          (62.86%)
+     1,506,719,821      L1-dcache-loads           #  710.711 M/sec                    (62.66%)
+       260,297,511      L1-dcache-load-misses     #   17.28% of all L1-dcache hits    (62.72%)
+           186,784      LLC-loads                 #    0.088 M/sec                    (49.66%)
+            64,386      LLC-load-misses           #   34.47% of all LL-cache hits     (49.77%)
+
+       2.133272961 seconds time elapsed
+

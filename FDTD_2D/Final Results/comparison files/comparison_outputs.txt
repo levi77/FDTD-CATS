@@ -1,0 +1,79 @@
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ g++ -g -std=c++11  comparison_time_blocked_wonnacott.cpp -O2 -lm -o comparison_time_blocked_wonnacott
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ ./comparison_time_blocked_wonnacott 
+
+ Tile Width: 20  Problem size= 12000000 bytes
+
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+Total time T = 100
+Problem space NZ = 1000 x 1000
+Naive time = 2.841235
+Skewed time = 2.845478
+
+
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ ./comparison_wonnacott 
+
+ Tile Width: 20  Problem size= 12000000 bytes
+
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+Total time T = 100
+Problem space NZ = 1000 x 1000
+Naive time = 2.738349
+Skewed time = 2.850726
+
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ ./jskew_comparison 
+
+ Tile Width: 20  Problem size= 12000000 bytes
+
+Max Tile Element size= 16000 bytes
+
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+Total time T = 100
+Problem space NZ = 1000 x 1000
+Naive time = 4.345020
+Skewed time = 4.322830
+
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ ./jskew_time_blocked_comparison 
+
+ Tile Width: 20  Problem size= 12000000 bytes
+
+Max Tile Element size= 16000 bytes
+
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+Total time T = 100
+Time block = 20
+Problem space NZ = 1000 x 1000
+Naive time = 4.325737
+Skewed time = 4.291633
+
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ ./skew_block_comparison 
+
+ Tile Width: 100  Problem size= 12000000 bytes
+
+Max Tile Element size= 16000 bytes
+
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+Total time T = 100
+Time block = 20
+Problem space NZ = 1000 x 1000
+Naive time = 2.729622
+Skewed time = 2.839207
+
+
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_2D/Final Results/comparison files$ ./skew_comparison 
+
+ Tile Width: 100  Problem size= 12000000 bytes
+
+Max Tile Element size= 16000 bytes
+
+Vectors H1 i E1 are equal to H2 E2 - simple algorithm and time skewing have the same results
+Total time T = 100
+Time block = 20
+Problem space NZ = 1000 x 1000
+Naive time = 2.832458
+Skewed time = 2.730569
+

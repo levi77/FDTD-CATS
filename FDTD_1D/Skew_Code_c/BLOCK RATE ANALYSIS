@@ -1,0 +1,183 @@
+
+BLOCK RATE ANALYSIS
+
+blocked1d.c
+
+
+Problem size= 7200000 bytes
+
+One array size= 3600000 bytes
+Block size= 12000 bytes
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 6000
+Block size B [bytes] = 24000
+Time spent = 19.177914
+==26639== 
+==26639== I   refs:      4,150,436,597
+==26639== I1  misses:            1,073
+==26639== LLi misses:            1,064
+==26639== I1  miss rate:          0.00%
+==26639== LLi miss rate:          0.00%
+==26639== 
+==26639== D   refs:      2,165,678,547  (1,983,820,721 rd   + 181,857,826 wr)
+==26639== D1  misses:       22,675,107  (   22,561,989 rd   +     113,118 wr)
+==26639== LLd misses:          227,659  (      114,575 rd   +     113,084 wr)
+==26639== D1  miss rate:           1.0% (          1.1%     +         0.1%  )
+==26639== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==26639== 
+==26639== LL refs:          22,676,180  (   22,563,062 rd   +     113,118 wr)
+==26639== LL misses:           228,723  (      115,639 rd   +     113,084 wr)
+==26639== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 5000
+Block size B [bytes] = 20000
+Time spent = 19.278200
+==26569== 
+==26569== I   refs:      4,150,511,899
+==26569== I1  misses:            1,075
+==26569== LLi misses:            1,066
+==26569== I1  miss rate:          0.00%
+==26569== LLi miss rate:          0.00%
+==26569== 
+==26569== D   refs:      2,165,723,718  (1,983,856,851 rd   + 181,866,867 wr)
+==26569== D1  misses:       22,548,543  (   22,435,425 rd   +     113,118 wr)
+==26569== LLd misses:          227,659  (      114,575 rd   +     113,084 wr)
+==26569== D1  miss rate:           1.0% (          1.1%     +         0.1%  )
+==26569== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==26569== 
+==26569== LL refs:          22,549,618  (   22,436,500 rd   +     113,118 wr)
+==26569== LL misses:           228,725  (      115,641 rd   +     113,084 wr)
+==26569== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 4500
+Block size B [bytes] = 18000
+Time spent = 19.184624
+==26452== 
+==26452== I   refs:      4,150,562,043
+==26452== I1  misses:            1,075
+==26452== LLi misses:            1,066
+==26452== I1  miss rate:          0.00%
+==26452== LLi miss rate:          0.00%
+==26452== 
+==26452== D   refs:      2,165,753,814  (1,983,880,929 rd   + 181,872,885 wr)
+==26452== D1  misses:       13,056,815  (   12,943,697 rd   +     113,118 wr)
+==26452== LLd misses:          227,659  (      114,575 rd   +     113,084 wr)
+==26452== D1  miss rate:           0.6% (          0.7%     +         0.1%  )
+==26452== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==26452== 
+==26452== LL refs:          13,057,890  (   12,944,772 rd   +     113,118 wr)
+==26452== LL misses:           228,725  (      115,641 rd   +     113,084 wr)
+==26452== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 4000
+Block size B [bytes] = 16000
+Time spent = 19.644011
+==11222== 
+==11222== I   refs:      4,150,621,904
+==11222== I1  misses:            1,077
+==11222== LLi misses:            1,067
+==11222== I1  miss rate:          0.00%
+==11222== LLi miss rate:          0.00%
+==11222== 
+==11222== D   refs:      2,165,790,371  (1,983,910,382 rd   + 181,879,989 wr)
+==11222== D1  misses:        1,143,503  (    1,030,385 rd   +     113,118 wr)
+==11222== LLd misses:          227,661  (      114,577 rd   +     113,084 wr)
+==11222== D1  miss rate:           0.1% (          0.1%     +         0.1%  )
+==11222== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==11222== 
+==11222== LL refs:           1,144,580  (    1,031,462 rd   +     113,118 wr)
+==11222== LL misses:           228,728  (      115,644 rd   +     113,084 wr)
+==11222== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 3600
+Block size B [bytes] = 14400
+Time spent = 19.140707
+==26346== 
+==26346== I   refs:      4,150,687,406
+==26346== I1  misses:            1,075
+==26346== LLi misses:            1,066
+==26346== I1  miss rate:          0.00%
+==26346== LLi miss rate:          0.00%
+==26346== 
+==26346== D   refs:      2,165,829,046  (1,983,941,120 rd   + 181,887,926 wr)
+==26346== D1  misses:          747,098  (      633,980 rd   +     113,118 wr)
+==26346== LLd misses:          227,659  (      114,575 rd   +     113,084 wr)
+==26346== D1  miss rate:           0.0% (          0.0%     +         0.1%  )
+==26346== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==26346== 
+==26346== LL refs:             748,173  (      635,055 rd   +     113,118 wr)
+==26346== LL misses:           228,725  (      115,641 rd   +     113,084 wr)
+==26346== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 3000
+Block size B [bytes] = 12000
+Time spent = 19.098409
+==26155== 
+==26155== I   refs:      4,150,812,780
+==26155== I1  misses:            1,073
+==26155== LLi misses:            1,064
+==26155== I1  miss rate:          0.00%
+==26155== LLi miss rate:          0.00%
+==26155== 
+==26155== D   refs:      2,165,904,291  (1,984,001,318 rd   + 181,902,973 wr)
+==26155== D1  misses:          228,106  (      114,988 rd   +     113,118 wr)
+==26155== LLd misses:          227,659  (      114,575 rd   +     113,084 wr)
+==26155== D1  miss rate:           0.0% (          0.0%     +         0.1%  )
+==26155== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==26155== 
+==26155== LL refs:             229,179  (      116,061 rd   +     113,118 wr)
+==26155== LL misses:           228,723  (      115,639 rd   +     113,084 wr)
+==26155== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+Total time T = 100
+Problem space NZ = 900000
+Block size B = 2000
+Block size B [bytes] = 8000
+Time spent = 19.022849
+==26187== 
+==26187== I   refs:      4,151,188,973
+==26187== I1  misses:            1,073
+==26187== LLi misses:            1,064
+==26187== I1  miss rate:          0.00%
+==26187== LLi miss rate:          0.00%
+==26187== 
+==26187== D   refs:      2,166,130,042  (1,984,181,918 rd   + 181,948,124 wr)
+==26187== D1  misses:          228,106  (      114,988 rd   +     113,118 wr)
+==26187== LLd misses:          227,659  (      114,575 rd   +     113,084 wr)
+==26187== D1  miss rate:           0.0% (          0.0%     +         0.1%  )
+==26187== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==26187== 
+==26187== LL refs:             229,179  (      116,061 rd   +     113,118 wr)
+==26187== LL misses:           228,723  (      115,639 rd   +     113,084 wr)
+==26187== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,390 @@
+VALGRIND RESULTS	1D FDTD (TIME-SKEWED vs NAIVE vs BLOCKED)
+
+FDTD1D
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_1D/Skew_Code_c$ valgrind --tool=cachegrind --cachegrind-out-file=outfdtd1d ./FDTD1D 
+==11180== Cachegrind, a cache and branch-prediction profiler
+==11180== Copyright (C) 2002-2015, and GNU GPL'd, by Nicholas Nethercote et al.
+==11180== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==11180== Command: ./FDTD1D 
+==11180== 
+--11180-- warning: L3 cache found, using its data for the LL simulation.
+Problem size= 7200000 bytes
+
+Total time T = 100
+Problem space NZ = 900000
+Time spent = 18.423139
+==11180== 
+==11180== I   refs:      3,790,059,684
+==11180== I1  misses:            1,072
+==11180== LLi misses:            1,063
+==11180== I1  miss rate:          0.00%
+==11180== LLi miss rate:          0.00%
+==11180== 
+==11180== D   refs:      1,985,453,043  (1,803,640,381 rd   + 181,812,662 wr)
+==11180== D1  misses:       22,615,702  (   22,502,484 rd   +     113,218 wr)
+==11180== LLd misses:       22,615,062  (   22,501,977 rd   +     113,085 wr)
+==11180== D1  miss rate:           1.1% (          1.2%     +         0.1%  )
+==11180== LLd miss rate:           1.1% (          1.2%     +         0.1%  )
+==11180== 
+==11180== LL refs:          22,616,774  (   22,503,556 rd   +     113,218 wr)
+==11180== LL misses:        22,616,125  (   22,503,040 rd   +     113,085 wr)
+==11180== LL miss rate:            0.4% (          0.4%     +         0.1%  )
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /home/serhan/Desktop/Dropbox/MASTERS/FDTD_1D/Skew_Code_c./FDTD1D.c
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr       D1mr       DLmr         Dw   D1mw   DLmw 
+
+-- line 17 ----------------------------------------
+            .    .    .           .          .          .          .      .      .  # include <stdlib.h>
+            .    .    .           .          .          .          .      .      .  # include <stdio.h>
+            .    .    .           .          .          .          .      .      .  # include <time.h>
+            .    .    .           .          .          .          .      .      .  //L3 NZ = 800000
+            .    .    .           .          .          .          .      .      .  
+            .    .    .           .          .          .          .      .      .  #define NZ  900000      /* NZ is the number of cells to be used */
+            .    .    .           .          .          .          .      .      .  //E1perimenting with the step size to see the changes at the cache performance
+            .    .    .           .          .          .          .      .      .  int main ()
+            6    1    1           1          0          0          2      0      0  {
+            .    .    .           .          .          .          .      .      .  	 //6 for very small test of above EH fields//number of time steps
+            .    .    .           .          .          .          .      .      .      
+            .    .    .           .          .          .          .      .      .      //const int s = 1; //2 for very small test //tile width 50000
+            .    .    .           .          .          .          .      .      .  	   
+            .    .    .           .          .          .          .      .      .  	  float E1[NZ], H1[NZ]; //field components
+            1    0    0           0          0          0          1      1      1  	  int size=sizeof(H1);
+            6    1    1           1          0          0          1      1      1  	  printf("Problem size= %d bytes\n\n",size*2);
+            .    .    .           .          .          .          .      .      .  	  int k, TOTAL_TIME;
+            .    .    .           .          .          .          .      .      .  	  float T;
+            .    .    .           .          .          .          .      .      .  
+            .    .    .           .          .          .          .      .      .  	  
+            .    .    .           .          .          .          .      .      .  
+            .    .    .           .          .          .          .      .      .  	  /* Initialize field components to zero*/
+    2,700,007    1    1   1,800,003          0          0          1      0      0  	  for ( k=0; k < NZ+1; k++ ) {
+    3,600,004    0    0     900,001          0          0    900,001 56,251 56,251  		H1[k] = 0;
+    3,600,004    0    0     900,001          0          0    900,001 56,251 56,250  		E1[k] = 0;
+            .    .    .           .          .          .          .      .      .  		
+            .    .    .           .          .          .          .      .      .  	  }
+            .    .    .           .          .          .          .      .      .  	  
+            .    .    .           .          .          .          .      .      .  	  
+            .    .    .           .          .          .          .      .      .  	  
+            2    0    0           0          0          0          1      1      1  	  T=0;
+            .    .    .           .          .          .          .      .      .  	  
+            1    0    0           0          0          0          1      0      0  	TOTAL_TIME = 100;
+            .    .    .           .          .          .          .      .      .  	  //default 100
+            2    0    0           0          0          0          2      0      0  	clock_t begin = clock();
+            .    .    .           .          .          .          .      .      .  	//unskewed
+          405    2    2         302          0          0          1      0      0  		for (int t = 0; t < TOTAL_TIME; t++) { 
+          400    0    0         200          1          1        100      0      0  		T=T+1;
+  270,000,400    1    1 180,000,100          0          0        100      0      0  		for (int i = 0; i < NZ; i++) {
+1,530,000,000    1    1 720,000,000 11,250,000 11,250,000 90,000,000      0      0  		      H1[i] += 0.5f*(E1[i+1] - E1[i]);
+            .    .    .           .          .          .          .      .      .  		    }
+          200    0    0         100          0          0        100    100      0  		    H1[NZ/2] = 1;
+  270,000,100    0    0 179,999,900          0          0        100      0      0  		for ( int i = 0; i < NZ-1; i++ ) {
+1,709,998,100    1    1 719,999,200 11,250,000 11,249,900 89,999,900      0      0  		      E1[i+1] += 0.5f*(H1[i+1] - H1[i]);
+            .    .    .           .          .          .          .      .      .  		    } 
+            .    .    .           .          .          .          .      .      .      }
+            2    0    0           0          0          0          2      1      1  	clock_t end = clock();
+            .    .    .           .          .          .          .      .      .  		/* End of the Main FDTD Loop */
+            .    .    .           .          .          .          .      .      .  
+            .    .    .           .          .          .          .      .      .  		/* At the end of the calculation, print out the E1 and H1 fields */
+            .    .    .           .          .          .          .      .      .  		  //for ( k=0; k<= NZ; k++ )
+            .    .    .           .          .          .          .      .      .  		  //{ printf( "%3d    %6.2f   %6.2f\n", k, E1[k], H1[k]); }
+            .    .    .           .          .          .          .      .      .  
+            .    .    .           .          .          .          .      .      .  		  
+            5    0    0           1          0          0          1      0      0  		printf( "Total time T = %d\n", TOTAL_TIME);
+            4    1    1           0          0          0          1      0      0  		printf( "Problem space NZ = %d\n", NZ);
+            .    .    .           .          .          .          .      .      .  	  
+            .    .    .           .          .          .          .      .      .  		
+            7    0    0           3          0          0          1      0      0  		double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+            7    1    1           2          0          0          2      0      0  		printf( "Time spent = %f\n", time_spent);
+            5    0    0           4          1          1          0      0      0  	}
+            .    .    .           .          .          .          .      .      .  	
+
+--------------------------------------------------------------------------------
+ Ir I1mr ILmr  Dr D1mr DLmr  Dw D1mw DLmw 
+--------------------------------------------------------------------------------
+100    1    1 100  100  100 100   99   99  percentage of events annotated
+
+
+
+=================================================
+=================================================
+=================================================
+=================================================
+=================================================
+
+
+
+FDTD_blocked
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_1D/Skew_Code_c$ valgrind --tool=cachegrind --cachegrind-out-file=outblocked ./FDTD_blocked
+==11222== Cachegrind, a cache and branch-prediction profiler
+==11222== Copyright (C) 2002-2015, and GNU GPL'd, by Nicholas Nethercote et al.
+==11222== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==11222== Command: ./FDTD_blocked
+==11222== 
+--11222-- warning: L3 cache found, using its data for the LL simulation.
+Problem size= 7200000 bytes
+
+Total time T = 100
+Problem space NZ = 900000
+Time spent = 19.644011
+==11222== 
+==11222== I   refs:      4,150,621,904
+==11222== I1  misses:            1,077
+==11222== LLi misses:            1,067
+==11222== I1  miss rate:          0.00%
+==11222== LLi miss rate:          0.00%
+==11222== 
+==11222== D   refs:      2,165,790,371  (1,983,910,382 rd   + 181,879,989 wr)
+==11222== D1  misses:        1,143,503  (    1,030,385 rd   +     113,118 wr)
+==11222== LLd misses:          227,661  (      114,577 rd   +     113,084 wr)
+==11222== D1  miss rate:           0.1% (          0.1%     +         0.1%  )
+==11222== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==11222== 
+==11222== LL refs:           1,144,580  (    1,031,462 rd   +     113,118 wr)
+==11222== LL misses:           228,728  (      115,644 rd   +     113,084 wr)
+==11222== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /home/serhan/Desktop/Dropbox/MASTERS/FDTD_1D/Skew_Code_c/FDTD_blocked.c
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr    D1mr    DLmr         Dw   D1mw   DLmw 
+
+-- line 16 ----------------------------------------
+            .    .    .           .       .       .          .      .      .  # include <stdio.h>
+            .    .    .           .       .       .          .      .      .  # include <time.h>
+            .    .    .           .       .       .          .      .      .  //L3 NZ = 800000
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  #define NZ  900000      /* NZ is the number of cells to be used */
+            .    .    .           .       .       .          .      .      .  #define B 4000
+            .    .    .           .       .       .          .      .      .  //E1perimenting with the step size to see the changes at the cache performance
+            .    .    .           .       .       .          .      .      .  int main ()
+            6    1    1           1       0       0          2      0      0  {
+            .    .    .           .       .       .          .      .      .  	 //6 for very small test of above EH fields//number of time steps
+            .    .    .           .       .       .          .      .      .      
+            .    .    .           .       .       .          .      .      .      //const int s = 1; //2 for very small test //tile width 50000
+            .    .    .           .       .       .          .      .      .  	   
+            .    .    .           .       .       .          .      .      .  	  float E1[NZ], H1[NZ]; //field components
+            1    0    0           0       0       0          1      1      1  	  int size=sizeof(H1);
+            6    1    1           1       0       0          1      1      1  	  printf("Problem size= %d bytes\n\n",size*2);
+            .    .    .           .       .       .          .      .      .  	  int k, TOTAL_TIME;
+            .    .    .           .       .       .          .      .      .  	  float T;
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  	  
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  	  /* Initialize field components to zero*/
+    2,700,007    1    1   1,800,003       0       0          1      0      0  	  for ( k=0; k < NZ+1; k++ ) {
+    3,600,004    0    0     900,001       0       0    900,001 56,251 56,251  		H1[k] = 0;
+    3,600,004    0    0     900,001       0       0    900,001 56,251 56,250  		E1[k] = 0;
+            .    .    .           .       .       .          .      .      .  			
+            .    .    .           .       .       .          .      .      .  	  }
+            .    .    .           .       .       .          .      .      .  	  
+            .    .    .           .       .       .          .      .      .  	  
+            2    0    0           1       1       1          1      1      0  	  H1[NZ/2] = 1;
+            2    0    0           0       0       0          1      0      0  	  T=0;
+            .    .    .           .       .       .          .      .      .  	  
+            1    1    1           0       0       0          1      1      1  	TOTAL_TIME = 100;
+            .    .    .           .       .       .          .      .      .  	  	//default 100
+            2    0    0           0       0       0          2      0      0  	clock_t begin = clock();
+            .    .    .           .       .       .          .      .      .  	//naive
+          679    1    1         451       0       0          1      0      0  	for (int z = 0; z < NZ; z += B) {
+       91,125    1    1      67,950       0       0        225      0      0  		for (int t = 0; t < TOTAL_TIME; t++) { 
+       90,000    1    1      45,000       0       0     22,500      0      0  			T=T+1;
+  450,157,500    2    2 270,067,500       0       0     22,500      0      0  			for (int i = z; i < (z+B); i++) {
+1,530,000,000    0    0 720,000,000 567,900 112,499 90,000,000      0      0  		      H1[i] += 0.5f*(E1[i+1] - E1[i]);
+            .    .    .           .       .       .          .      .      .  		    }
+       45,000    0    0      22,500       0       0          0      0      0  		if(z!=NZ-B){	
+  448,179,200    1    1 268,867,200       0       0     22,400      0      0  			for ( int i = z; i < (z+B); i++ ) {
+1,702,400,000    1    1 716,800,000 458,400       0 89,600,000      0      0  		      E1[i+1] += 0.5f*(H1[i+1] - H1[i]);
+            .    .    .           .       .       .          .      .      .  		    } 
+            .    .    .           .       .       .          .      .      .  	    }else{
+    2,000,200    0    0   1,200,000       0       0        100      0      0  	    	for ( int i = z; i < (z+B-1); i++ ) {
+    7,598,100    1    1   3,199,200   1,600       0    399,900      0      0  		      E1[i+1] += 0.5f*(H1[i+1] - H1[i]);
+            .    .    .           .       .       .          .      .      .  		    }
+            .    .    .           .       .       .          .      .      .  	    	} 
+            .    .    .           .       .       .          .      .      .  		}
+            .    .    .           .       .       .          .      .      .  	}
+            .    .    .           .       .       .          .      .      .  		/* End of the Main FDTD Loop */
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  		/* At the end of the calculation, print out the E1 and H1 fields */
+            .    .    .           .       .       .          .      .      .  		  //for ( k=0; k<= NZ; k++ )
+            .    .    .           .       .       .          .      .      .  		  //{ printf( "%3d    %6.2f   %6.2f\n", k, E1[k], H1[k]); }
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  		  
+            5    0    0           1       0       0          1      0      0  		printf( "Total time T = %d\n", TOTAL_TIME);
+            4    1    1           0       0       0          1      0      0  		printf( "Problem space NZ = %d\n", NZ);
+            .    .    .           .       .       .          .      .      .  	  		
+            2    0    0           0       0       0          2      0      0  		clock_t end = clock();
+            7    1    1           3       0       0          1      0      0  		double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+            7    0    0           2       0       0          2      0      0  		printf( "Time spent = %f\n", time_spent);
+            5    0    0           4       1       1          0      0      0  	}
+            .    .    .           .       .       .          .      .      .  	
+
+--------------------------------------------------------------------------------
+ Ir I1mr ILmr  Dr D1mr DLmr  Dw D1mw DLmw 
+--------------------------------------------------------------------------------
+100    1    1 100  100   98 100   99   99  percentage of events annotated
+
+=================================================
+=================================================
+=================================================
+=================================================
+=================================================
+
+
+
+FDTD_skewed
+
+serhan@serhan-XPS-15-9550:~/Desktop/Dropbox/MASTERS/FDTD_1D/Skew_Code_c$ valgrind --tool=cachegrind --cachegrind-out-file=outskewed ./FDTD_skewed
+==11250== Cachegrind, a cache and branch-prediction profiler
+==11250== Copyright (C) 2002-2015, and GNU GPL'd, by Nicholas Nethercote et al.
+==11250== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==11250== Command: ./FDTD_skewed
+==11250== 
+--11250-- warning: L3 cache found, using its data for the LL simulation.
+
+Problem size= 7200000 bytes
+s=40
+Max Tile Element size= 16000 bytes
+
+Total time T = 100
+Problem space NZ = 900000
+Time spent = 28.919831
+==4986== 
+==4986== I   refs:      6,386,815,508
+==4986== I1  misses:            1,075
+==4986== LLi misses:            1,066
+==4986== I1  miss rate:          0.00%
+==4986== LLi miss rate:          0.00%
+==4986== 
+==4986== D   refs:      3,286,114,499  (3,099,778,971 rd   + 186,335,528 wr)
+==4986== D1  misses:          228,127  (      115,000 rd   +     113,127 wr)
+==4986== LLd misses:          227,686  (      114,593 rd   +     113,093 wr)
+==4986== D1  miss rate:           0.0% (          0.0%     +         0.1%  )
+==4986== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==4986== 
+==4986== LL refs:             229,202  (      116,075 rd   +     113,127 wr)
+==4986== LL misses:           228,752  (      115,659 rd   +     113,093 wr)
+==4986== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /home/serhan/Desktop/Dropbox/MASTERS/FDTD_1D/Skew_Code_c/FDTD_skewed.c
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr    D1mr    DLmr         Dw   D1mw   DLmw 
+
+-- line 19 ----------------------------------------
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  #define NZ  900000     /* NZ is the number of cells to be used */
+            .    .    .           .       .       .          .      .      .  //experimenting with the step size to see the changes at the cache performance
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  #define MAX(a,b) ( ( a > b) ? a : b ) 
+            .    .    .           .       .       .          .      .      .  #define MIN(a,b) ( ( a < b) ? a : b ) 
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  int main ()
+            6    1    1           1       0       0          2      0      0  {
+            .    .    .           .       .       .          .      .      .  	
+            .    .    .           .       .       .          .      .      .      //2048
+            .    .    .           .       .       .          .      .      .        
+            1    0    0           0       0       0          1      1      1        const int s = 50; //2 for very small test default 1000//tile width 50000
+            5    1    1           1       0       0          1      1      1  	  printf("\n Tile Width: %d",s);
+            .    .    .           .       .       .          .      .      .  	  
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  	  
+            .    .    .           .       .       .          .      .      .  	  float H2[NZ], E2[NZ];
+            1    0    0           0       0       0          1      1      0  	  int size=sizeof(H2);
+            6    0    0           1       0       0          1      0      0  	  printf("\nProblem size= %d bytes\n\n",size*2);
+            .    .    .           .       .       .          .      .      .  	  
+            .    .    .           .       .       .          .      .      .  	  int k, TOTAL_TIME;
+            .    .    .           .       .       .          .      .      .  	 
+            .    .    .           .       .       .          .      .      .  	 
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  	  /* Initialize field components to zero*/
+    2,700,004    1    1   1,800,001       0       0          1      0      0  	  for ( k=0; k < NZ; k++ ) {
+    3,600,000    0    0     900,000       0       0    900,000 56,250 56,250  		H2[k] = 0;
+    3,600,000    0    0     900,000       0       0    900,000 56,251 56,251  		E2[k] = 0;		
+            .    .    .           .       .       .          .      .      .  	  }
+            .    .    .           .       .       .          .      .      .  	  
+            .    .    .           .       .       .          .      .      .  	  
+            2    1    1           1       1       1          1      1      0  	H2[NZ/2] = 1;
+            .    .    .           .       .       .          .      .      .  	  
+            1    0    0           0       0       0          1      1      1  	TOTAL_TIME = 50; //default 100
+            7    0    0           2       0       0          1      0      0  	printf("Max Tile Element size= %d bytes\n\n",(4*s*TOTAL_TIME));
+            .    .    .           .       .       .          .      .      .  	//skewed
+            2    1    1           0       0       0          2      0      0  	clock_t begin = clock();
+      108,012    2    2      72,006       0       0          1      0      0  	 	for (int ii = 0; ii < TOTAL_TIME + NZ; ii += s){
+            .    .    .           .       .       .          .      .      .  	 		
+    3,690,205    0    0   2,736,152       0       0     18,001      0      0  			for (int t = 0; t < TOTAL_TIME; t++) {
+            .    .    .           .       .       .          .      .      .  			
+  462,600,700    1    1 231,300,350       0       0    900,050      0      0  			for (int i = MAX(t, ii); i < MIN(t + NZ, ii + s); i++) {
+1,125,000,000    2    2 540,000,000 112,500 112,499 45,000,000      0      0  			    H2[i - t] += 0.5*(E2[i - t+ 1] - E2[i - t]);        
+            .    .    .           .       .       .          .      .      .  			}
+  464,400,300    2    2 230,400,050       0       0    900,050      0      0  			for (int i = MAX(t +1, ii); i < MIN(t + NZ, ii + s); i++) {
+1,124,998,750    1    1 539,999,400       0       0 44,999,950      0      0  			    E2[i - t] += 0.5*(H2[i - t] - H2[i - t -1 ]);
+            .    .    .           .       .       .          .      .      .  			    
+            .    .    .           .       .       .          .      .      .  			}
+            .    .    .           .       .       .          .      .      .  			}
+            .    .    .           .       .       .          .      .      .  		    
+            .    .    .           .       .       .          .      .      .  		}
+            2    0    0           0       0       0          2      0      0  	clock_t end = clock();
+            .    .    .           .       .       .          .      .      .  		/* At the end of the calculation, print out the Ex and Hy fields */
+            .    .    .           .       .       .          .      .      .  		//for ( k=0; k<= NZ; k++ )
+            .    .    .           .       .       .          .      .      .  		//  { printf( "%3d    %6.2f   %6.2f\n", k, E2[k], H2[k]); }
+            .    .    .           .       .       .          .      .      .  
+            .    .    .           .       .       .          .      .      .  		  
+            5    0    0           1       0       0          1      0      0  		printf( "Total time T = %d\n", TOTAL_TIME);
+            4    0    0           0       0       0          1      0      0  		printf( "Problem space NZ = %d\n", NZ);
+            .    .    .           .       .       .          .      .      .  	  		
+            .    .    .           .       .       .          .      .      .  
+            7    1    1           3       0       0          1      0      0  		double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; 
+            7    0    0           2       0       0          2      0      0  		printf( "Time spent = %f\n", time_spent);
+            5    0    0           4       1       1          0      0      0  	}
+            .    .    .           .       .       .          .      .      .  	
+
+--------------------------------------------------------------------------------
+ Ir I1mr ILmr  Dr D1mr DLmr  Dw D1mw DLmw 
+--------------------------------------------------------------------------------
+100    1    1 100   98   98 100   99   99  percentage of events annotated
+
+
+
+
+
+
+
+
+
+skewed blocked 16000kb block, 400 tile width, time block 10
+
+
+
+ Tile Width: 400
+Problem size= 7200000 bytes
+
+Max Tile Element size= 16000 bytes
+
+Total time T = 100
+Problem space NZ = 900000
+Time spent = 27.984314
+==5030== 
+==5030== I   refs:      6,318,230,481
+==5030== I1  misses:            1,076
+==5030== LLi misses:            1,067
+==5030== I1  miss rate:          0.00%
+==5030== LLi miss rate:          0.00%
+==5030== 
+==5030== D   refs:      3,249,684,102  (3,067,398,753 rd   + 182,285,349 wr)
+==5030== D1  misses:        1,240,633  (    1,127,502 rd   +     113,131 wr)
+==5030== LLd misses:        1,240,189  (    1,127,093 rd   +     113,096 wr)
+==5030== D1  miss rate:           0.0% (          0.0%     +         0.1%  )
+==5030== LLd miss rate:           0.0% (          0.0%     +         0.1%  )
+==5030== 
+==5030== LL refs:           1,241,709  (    1,128,578 rd   +     113,131 wr)
+==5030== LL misses:         1,241,256  (    1,128,160 rd   +     113,096 wr)
+==5030== LL miss rate:            0.0% (          0.0%     +         0.1%  )
+
+
+
